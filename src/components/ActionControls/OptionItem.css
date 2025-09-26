@@ -1,0 +1,11 @@
+.option-item {
+    width: 240px;
+    height: 36px;
+    background-color: #EFEFF4;
+    color: #333333;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    cursor: pointer;
+}

@@ -1,0 +1,25 @@
+.header {
+    background-color: #2A4A75;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 60px;
+    box-sizing: border-box;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    margin: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.header-title {
+    color: #E1E6EA;
+    font-size: 20px;
+    font-family: 'Roboto-Bold', sans-serif;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}

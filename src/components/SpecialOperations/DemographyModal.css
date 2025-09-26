@@ -1,0 +1,118 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.demography-modal {
+    background: white;
+    border-radius: 8px;
+    width: 600px;
+    max-width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #E0E0E0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button:hover {
+    color: #333;
+}
+
+.modal-content {
+    padding: 20px;
+}
+
+.stat-section {
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #F5F5F7;
+    border-radius: 5px;
+}
+
+.stat-section h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+}
+
+.control-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.select-input {
+    padding: 8px 12px;
+    border: 1px solid #D1D3DA;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.action-button-small {
+    padding: 8px 16px;
+    background-color: #1A73E8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.action-button-small:hover {
+    background-color: #1557B0;
+}
+
+.stat-result {
+    padding: 15px;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #E0E0E0;
+}
+
+.stat-result p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.stat-result strong {
+    color: #333;
+}

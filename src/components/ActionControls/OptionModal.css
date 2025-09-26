@@ -1,0 +1,28 @@
+.option-modal {
+    position: absolute;
+    top: 50px;
+    width: 270px;
+    max-height: 290px;
+    background-color: #F8F9FA;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+.option-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    color: #333333;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+
+.option-modal-content {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

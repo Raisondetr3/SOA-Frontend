@@ -1,0 +1,75 @@
+.person-table-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.person-table-container {
+    width: 1260px;
+}
+
+.person-table-header, .person-table-row {
+    display: grid;
+    grid-template-columns: 50px 120px 120px 110px 70px 70px 90px 90px 110px 180px 100px;
+    height: 50px;
+    align-items: center;
+    padding: 0 8px;
+}
+
+.person-table-header {
+    background-color: #D1D3DA;
+    color: #2A2A2A;
+    font-weight: 600;
+    text-align: center;
+}
+
+.person-table-row.even {
+    background-color: #EFEFF4;
+}
+
+.person-table-row.odd {
+    background-color: #F5F5F7;
+}
+
+.person-table-row div {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #333333;
+}
+
+.action-icons img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.no-data {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+    margin-top: 20px;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    width: 1163px;
+}
+
+.pagination-controls button {
+    width: 102px;
+    height: 34px;
+    background-color: #E5E5E5;
+    border: none;
+    border-radius: 5px;
+    margin: 0 8px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333333;
+    cursor: pointer;
+}

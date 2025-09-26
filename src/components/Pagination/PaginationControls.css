@@ -1,0 +1,21 @@
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 40px;
+}
+
+
+.pagination-button {
+    width: 102px;
+    height: 34px;
+    background-color: #EFEFF4;
+    color: #333333;
+    font-family: 'Roboto-SemiBold', sans-serif;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 8px;
+}
