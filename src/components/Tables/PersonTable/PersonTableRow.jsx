@@ -38,7 +38,6 @@ function PersonTableRow({ person, index, handleEdit, handleDelete }) {
 
     return (
         <div className={`person-table-row ${index % 2 === 0 ? 'even' : 'odd'}`}>
-            <div>{person.id || 'N/A'}</div>
             <div className="person-name">{person.name || 'N/A'}</div>
             <div>
                 {person.coordinates

@@ -7,7 +7,7 @@ const Toast = ({ message, type = 'info', duration = 3000, onClose }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsVisible(false);
-            setTimeout(onClose, 300); // Даем время на анимацию
+            setTimeout(onClose, 300);
         }, duration);
 
         return () => clearTimeout(timer);

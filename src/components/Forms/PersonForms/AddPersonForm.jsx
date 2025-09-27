@@ -117,22 +117,21 @@ const AddPersonForm = ({ onClose, onSubmit }) => {
 
     const validateLocationField = (field, value) => {
         let errorMsg = '';
-        // Валидация только если поле заполнено
-        if (value !== '') {
-            switch (field) {
-                case 'name':
-                    // Имя локации может быть пустым
-                    break;
-                case 'x':
-                case 'y':
-                case 'z':
-                    if (isNaN(value)) {
-                        errorMsg = 'Должно быть числом';
-                    }
-                    break;
-                default:
-                    break;
-            }
+        switch (field) {
+            case 'name':
+                if (!value || value.trim() === '') {
+                    errorMsg = 'Имя не может быть пустым';
+                }
+                break;
+            case 'x':
+            case 'y':
+            case 'z':
+                if (isNaN(value)) {
+                    errorMsg = 'Должно быть числом';
+                }
+                break;
+            default:
+                break;
         }
         setErrors(prevErrors => ({
             ...prevErrors,
@@ -187,12 +186,14 @@ const AddPersonForm = ({ onClose, onSubmit }) => {
             valid = false;
         }
 
-        // Проверка location - если хотя бы одно поле заполнено
         const hasLocationData = person.location.x !== '' || person.location.y !== '' ||
             person.location.z !== '' || person.location.name !== '';
+        if (!person.location.name || person.location.name.trim() === '') {
+            newErrors.location_name = 'Имя локации не может быть пустым';
+            valid = false;
+        }
 
         if (hasLocationData) {
-            // Если есть данные локации, проверяем что числовые поля - числа
             if (person.location.x !== '' && isNaN(person.location.x)) {
                 newErrors.location_x = 'X локации должно быть числом';
                 valid = false;
@@ -216,11 +217,11 @@ const AddPersonForm = ({ onClose, onSubmit }) => {
 
         const isValid = validateAllFields();
         if (!isValid) {
-            showToast('Проверьте правильность заполнения полей', 'warning');
+            if (setErrors)
+            showToast('Проверьте корректность заполнения полей', 'warning');
             return;
         }
 
-        // Определяем, есть ли данные для локации
         const hasLocationData = person.location.x !== '' || person.location.y !== '' ||
             person.location.z !== '' || person.location.name !== '';
 
@@ -294,7 +295,6 @@ const AddPersonForm = ({ onClose, onSubmit }) => {
             <div className="form-container">
                 <h2>Добавить нового Person</h2>
                 <form onSubmit={handleSubmit}>
-                    {/* Все поля формы остаются без изменений, только убираем checkbox для location */}
                     <label>
                         Имя: *
                         <input
@@ -406,9 +406,8 @@ const AddPersonForm = ({ onClose, onSubmit }) => {
                         {errors.nationality && <span className="error">{errors.nationality}</span>}
                     </label>
 
-                    {/* Локация теперь всегда видима, без checkbox */}
                     <fieldset>
-                        <legend>Локация (опционально)</legend>
+                        <legend>Локация</legend>
                         <label>
                             Название:
                             <input

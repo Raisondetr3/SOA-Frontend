@@ -8,7 +8,6 @@ import './SpecialOperations.css';
 function SpecialOperations() {
     const [showDemographyModal, setShowDemographyModal] = useState(false);
 
-    // Операции с Person
     const handleDeleteByHairColor = async (hairColor) => {
         try {
             const response = await fetch(
@@ -19,7 +18,7 @@ function SpecialOperations() {
             if (response.status === 204) {
                 showToast(`Person с цветом волос ${hairColor} успешно удален`, 'success');
             } else if (response.status === 404) {
-                showToast(`Не найдено Person с цветом волос ${hairColor}`, 'warning');
+                showToast(`Не найден Person с цветом волос ${hairColor}`, 'warning');
             } else {
                 const error = await response.json();
                 showToast(error.message || 'Ошибка при удалении', 'error');
@@ -42,36 +41,7 @@ function SpecialOperations() {
                     5000
                 );
             } else if (response.status === 404) {
-                showToast('В базе данных нет Person', 'warning');
-            } else {
-                const error = await response.json();
-                showToast(error.message || 'Ошибка при получении данных', 'error');
-            }
-        } catch (error) {
-            console.error(error);
-            showToast('Ошибка соединения с сервером', 'error');
-        }
-    };
-
-    const handleGetByNationalityLessThan = async (nationality) => {
-        try {
-            const response = await fetch(
-                `${import.meta.env.VITE_PERSON_SERVICE}/persons/nationality-less-than/${nationality}`
-            );
-
-            if (response.ok) {
-                const persons = await response.json();
-                if (persons.length > 0) {
-                    showToast(
-                        `Найдено ${persons.length} Person с nationality < ${nationality}`,
-                        'info',
-                        5000
-                    );
-                    // Можно добавить отображение списка в модальном окне
-                    console.log('Найденные persons:', persons);
-                } else {
-                    showToast(`Нет Person с nationality < ${nationality}`, 'info');
-                }
+                showToast('Не нашлось ни 1 Person', 'warning');
             } else {
                 const error = await response.json();
                 showToast(error.message || 'Ошибка при получении данных', 'error');
@@ -84,7 +54,6 @@ function SpecialOperations() {
 
     return (
         <div className="special-operations-container">
-            {/* Кнопка демографии выделена отдельно */}
             <div className="demography-button-wrapper">
                 <button
                     className="demography-button"
@@ -94,7 +63,6 @@ function SpecialOperations() {
                 </button>
             </div>
 
-            {/* Остальные операции в ряд */}
             <div className="operations-row">
                 <SelectableButton
                     label="Удалить по цвету волос"
@@ -105,12 +73,6 @@ function SpecialOperations() {
                 <ActionButton
                     label="Person с максимальным именем"
                     onClick={handleGetMaxName}
-                />
-
-                <SelectableButton
-                    label="Фильтр по nationality <"
-                    options={['FRANCE', 'SPAIN', 'INDIA', 'THAILAND', 'SOUTH_KOREA']}
-                    onSubmit={handleGetByNationalityLessThan}
                 />
             </div>
 

@@ -4,7 +4,6 @@ import './PersonTable.css';
 function PersonTableHeader() {
     return (
         <div className="person-table-header">
-            <div>ID</div>
             <div>Name</div>
             <div>Coordinates</div>
             <div>Creation Date</div>

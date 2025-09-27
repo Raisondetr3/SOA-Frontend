@@ -21,6 +21,7 @@ function DemographyModal({ onClose }) {
 
             if (response.ok) {
                 const data = await response.json();
+                console.log('Hair color stats:', data);
                 setHairColorStats(data);
                 showToast('Статистика успешно получена', 'success');
             } else {
@@ -41,6 +42,7 @@ function DemographyModal({ onClose }) {
 
             if (response.ok) {
                 const data = await response.json();
+                console.log('Nationality eye color stats:', data);
                 setNationalityEyeStats(data);
                 showToast('Статистика успешно получена', 'success');
             } else {
@@ -62,7 +64,6 @@ function DemographyModal({ onClose }) {
                 </div>
 
                 <div className="modal-content">
-                    {/* Статистика по цвету волос */}
                     <div className="stat-section">
                         <h3>Процент людей по цвету волос</h3>
                         <div className="control-group">
@@ -87,12 +88,11 @@ function DemographyModal({ onClose }) {
                             <div className="stat-result">
                                 <p><strong>Цвет волос:</strong> {hairColorStats.hairColor}</p>
                                 <p><strong>Процент:</strong> {hairColorStats.percentage.toFixed(2)}%</p>
-                                <p><strong>Количество:</strong> {hairColorStats.colorCount} из {hairColorStats.totalCount}</p>
+                                <p><strong>Количество:</strong> {hairColorStats.personsWithHairColor || hairColorStats.colorCount} из {hairColorStats.totalPersons || hairColorStats.totalCount}</p>
                             </div>
                         )}
                     </div>
 
-                    {/* Статистика по национальности и цвету глаз */}
                     <div className="stat-section">
                         <h3>Количество по национальности и цвету глаз</h3>
                         <div className="control-group">
@@ -126,8 +126,8 @@ function DemographyModal({ onClose }) {
                             <div className="stat-result">
                                 <p><strong>Национальность:</strong> {nationalityEyeStats.nationality}</p>
                                 <p><strong>Цвет глаз:</strong> {nationalityEyeStats.eyeColor}</p>
-                                <p><strong>Количество:</strong> {nationalityEyeStats.eyeColorCount}</p>
-                                <p><strong>Всего в национальности:</strong> {nationalityEyeStats.totalNationalityCount}</p>
+                                <p><strong>Количество:</strong> {nationalityEyeStats.count || nationalityEyeStats.eyeColorCount}</p>
+                                <p><strong>Всего в национальности:</strong> {nationalityEyeStats.totalPersonsInNationality || nationalityEyeStats.totalNationalityCount}</p>
                             </div>
                         )}
                     </div>

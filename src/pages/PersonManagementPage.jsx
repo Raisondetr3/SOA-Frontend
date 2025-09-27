@@ -4,7 +4,7 @@ import PersonTable from '../components/Tables/PersonTable/PersonTable';
 import AddPersonForm from '../components/Forms/PersonForms/AddPersonForm';
 import EditPersonForm from '../components/Forms/PersonForms/EditPersonForm';
 import SpecialOperations from '../components/SpecialOperations/SpecialOperations';
-import SearchBar from '../components/SearchBar/SearchBar';
+import AdvancedFilters from '../components/Filters/AdvancedFilters';
 import { showToast } from '../components/Toast/toastService';
 import './PersonManagementPage.css';
 
@@ -13,16 +13,11 @@ const PersonManagementPage = () => {
     const [showAddForm, setShowAddForm] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
     const [personToEdit, setPersonToEdit] = useState(null);
-    const [filters, setFilters] = useState({
-        name: '',
-        hairColor: '',
-        eyeColor: '',
-        nationality: ''
-    });
+    const [filters, setFilters] = useState({});
+    const [sortBy, setSortBy] = useState('');
 
     const handlePersonAdded = (newPerson) => {
         setPersons(prev => [...prev, newPerson]);
-        showToast('Person успешно добавлен!', 'success');
     };
 
     const handlePersonUpdated = (updatedPerson) => {
@@ -39,12 +34,12 @@ const PersonManagementPage = () => {
         setShowEditForm(true);
     };
 
-    const handleNameSearch = (searchTerm) => {
-        setFilters(prev => ({ ...prev, name: searchTerm }));
+    const handleFiltersChange = (newFilters) => {
+        setFilters(newFilters);
     };
 
-    const handleFilterChange = (filterName, value) => {
-        setFilters(prev => ({ ...prev, [filterName]: value }));
+    const handleSortChange = (sortField) => {
+        setSortBy(sortField);
     };
 
     return (
@@ -52,52 +47,13 @@ const PersonManagementPage = () => {
             <Header />
 
             <div className="content-wrapper">
-                {/* Поиск и фильтры */}
-                <div className="filters-section">
-                    <SearchBar
-                        placeholder="Поиск по имени..."
-                        onSearch={handleNameSearch}
-                    />
+                <AdvancedFilters
+                    onFiltersChange={handleFiltersChange}
+                    onSortChange={handleSortChange}
+                />
 
-                    <select
-                        onChange={(e) => handleFilterChange('hairColor', e.target.value)}
-                        className="filter-select"
-                    >
-                        <option value="">Все цвета волос</option>
-                        <option value="GREEN">GREEN</option>
-                        <option value="BLUE">BLUE</option>
-                        <option value="ORANGE">ORANGE</option>
-                        <option value="BROWN">BROWN</option>
-                    </select>
-
-                    <select
-                        onChange={(e) => handleFilterChange('eyeColor', e.target.value)}
-                        className="filter-select"
-                    >
-                        <option value="">Все цвета глаз</option>
-                        <option value="GREEN">GREEN</option>
-                        <option value="BLUE">BLUE</option>
-                        <option value="ORANGE">ORANGE</option>
-                        <option value="BROWN">BROWN</option>
-                    </select>
-
-                    <select
-                        onChange={(e) => handleFilterChange('nationality', e.target.value)}
-                        className="filter-select"
-                    >
-                        <option value="">Все национальности</option>
-                        <option value="FRANCE">FRANCE</option>
-                        <option value="SPAIN">SPAIN</option>
-                        <option value="INDIA">INDIA</option>
-                        <option value="THAILAND">THAILAND</option>
-                        <option value="SOUTH_KOREA">SOUTH_KOREA</option>
-                    </select>
-                </div>
-
-                {/* Специальные операции */}
                 <SpecialOperations />
 
-                {/* Кнопка добавления - перемещена прямо над таблицей */}
                 <div className="add-button-wrapper">
                     <button
                         className="add-button"
@@ -107,16 +63,15 @@ const PersonManagementPage = () => {
                     </button>
                 </div>
 
-                {/* Таблица */}
                 <PersonTable
                     persons={persons}
                     setPersons={setPersons}
                     filters={filters}
+                    sortBy={sortBy}
                     onEditPerson={handleEditPerson}
                 />
             </div>
 
-            {/* Модальные окна остаются без изменений */}
             {showAddForm && (
                 <AddPersonForm
                     onClose={() => setShowAddForm(false)}
