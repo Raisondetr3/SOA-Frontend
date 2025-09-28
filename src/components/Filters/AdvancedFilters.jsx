@@ -32,26 +32,47 @@ const AdvancedFilters = ({ onFiltersChange, onSortChange }) => {
         ]
     };
 
-    const handleSortChange = (field) => {
-        if (!field) {
+    const handleSortChange = (fieldBase) => {
+        if (!fieldBase) {
             setSortFields([]);
             onSortChange('');
             return;
         }
 
-        const existingIndex = sortFields.findIndex(f =>
-            f === field || f === `-${field}` || `-${f}` === field
-        );
+        const ascField = fieldBase;
+        const descField = `-${fieldBase}`;
 
-        if (existingIndex >= 0) {
-            const newFields = sortFields.filter((_, i) => i !== existingIndex);
-            setSortFields(newFields);
-            onSortChange(newFields.join(','));
+        const ascIndex = sortFields.indexOf(ascField);
+        const descIndex = sortFields.indexOf(descField);
+
+        let newFields = [...sortFields];
+
+        if (ascIndex >= 0) {
+            newFields[ascIndex] = descField;
+        } else if (descIndex >= 0) {
+            newFields = newFields.filter((_, i) => i !== descIndex);
         } else {
-            const newFields = [...sortFields, field];
-            setSortFields(newFields);
-            onSortChange(newFields.join(','));
+            newFields.push(ascField);
         }
+
+        setSortFields(newFields);
+        onSortChange(newFields.join(','));
+    };
+
+    const getSortState = (fieldBase) => {
+        if (sortFields.includes(fieldBase)) {
+            return 'asc';
+        } else if (sortFields.includes(`-${fieldBase}`)) {
+            return 'desc';
+        }
+        return null;
+    };
+
+    const getSortIcon = (fieldBase) => {
+        const state = getSortState(fieldBase);
+        if (state === 'asc') return '↑';
+        if (state === 'desc') return '↓';
+        return '';
     };
 
     useEffect(() => {
@@ -133,6 +154,11 @@ const AdvancedFilters = ({ onFiltersChange, onSortChange }) => {
         });
         setActiveFilters({});
         onFiltersChange({});
+    };
+
+    const clearSort = () => {
+        setSortFields([]);
+        onSortChange('');
     };
 
     const handleNumberFilterChange = (field, type, value) => {
@@ -345,31 +371,35 @@ const AdvancedFilters = ({ onFiltersChange, onSortChange }) => {
                 <label>Сортировка:</label>
                 <div className="sort-options">
                     <button
-                        className={`sort-btn ${sortFields.includes('name') ? 'active asc' : sortFields.includes('-name') ? 'active desc' : ''}`}
-                        onClick={() => handleSortChange(sortFields.includes('name') ? '-name' : 'name')}
+                        className={`sort-btn ${getSortState('name') ? `active ${getSortState('name')}` : ''}`}
+                        onClick={() => handleSortChange('name')}
+                        title={getSortState('name') === 'asc' ? 'По возрастанию' : getSortState('name') === 'desc' ? 'По убыванию' : 'Без сортировки'}
                     >
-                        Имя {sortFields.includes('name') ? '↑' : sortFields.includes('-name') ? '↓' : ''}
+                        Имя {getSortIcon('name')}
                     </button>
                     <button
-                        className={`sort-btn ${sortFields.includes('weight') ? 'active asc' : sortFields.includes('-weight') ? 'active desc' : ''}`}
-                        onClick={() => handleSortChange(sortFields.includes('weight') ? '-weight' : 'weight')}
+                        className={`sort-btn ${getSortState('weight') ? `active ${getSortState('weight')}` : ''}`}
+                        onClick={() => handleSortChange('weight')}
+                        title={getSortState('weight') === 'asc' ? 'По возрастанию' : getSortState('weight') === 'desc' ? 'По убыванию' : 'Без сортировки'}
                     >
-                        Вес {sortFields.includes('weight') ? '↑' : sortFields.includes('-weight') ? '↓' : ''}
+                        Вес {getSortIcon('weight')}
                     </button>
                     <button
-                        className={`sort-btn ${sortFields.includes('height') ? 'active asc' : sortFields.includes('-height') ? 'active desc' : ''}`}
-                        onClick={() => handleSortChange(sortFields.includes('height') ? '-height' : 'height')}
+                        className={`sort-btn ${getSortState('height') ? `active ${getSortState('height')}` : ''}`}
+                        onClick={() => handleSortChange('height')}
+                        title={getSortState('height') === 'asc' ? 'По возрастанию' : getSortState('height') === 'desc' ? 'По убыванию' : 'Без сортировки'}
                     >
-                        Рост {sortFields.includes('height') ? '↑' : sortFields.includes('-height') ? '↓' : ''}
+                        Рост {getSortIcon('height')}
                     </button>
                     <button
-                        className={`sort-btn ${sortFields.includes('creationDate') ? 'active asc' : sortFields.includes('-creationDate') ? 'active desc' : ''}`}
-                        onClick={() => handleSortChange(sortFields.includes('creationDate') ? '-creationDate' : 'creationDate')}
+                        className={`sort-btn ${getSortState('creationDate') ? `active ${getSortState('creationDate')}` : ''}`}
+                        onClick={() => handleSortChange('creationDate')}
+                        title={getSortState('creationDate') === 'asc' ? 'По возрастанию' : getSortState('creationDate') === 'desc' ? 'По убыванию' : 'Без сортировки'}
                     >
-                        Дата {sortFields.includes('creationDate') ? '↑' : sortFields.includes('-creationDate') ? '↓' : ''}
+                        Дата {getSortIcon('creationDate')}
                     </button>
                     {sortFields.length > 0 && (
-                        <button className="clear-sort-btn" onClick={() => handleSortChange('')}>
+                        <button className="clear-sort-btn" onClick={clearSort}>
                             Сбросить
                         </button>
                     )}

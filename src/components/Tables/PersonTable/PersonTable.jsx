@@ -6,7 +6,7 @@ import EditPersonForm from '../../Forms/PersonForms/EditPersonForm';
 import PaginationControls from '../../Pagination/PaginationControls';
 import { showToast } from '../../Toast/toastService';
 
-function PersonTable({ persons = [], setPersons, filters, sortBy }) {
+function PersonTable({ persons = [], setPersons, filters, sortBy, refreshTrigger }) {
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
@@ -15,7 +15,7 @@ function PersonTable({ persons = [], setPersons, filters, sortBy }) {
 
     useEffect(() => {
         fetchPersons(currentPage, filters, sortBy);
-    }, [currentPage, filters, sortBy]);
+    }, [currentPage, filters, sortBy, refreshTrigger]);
 
     const fetchPersons = async (page, filters = {}, sortBy = '') => {
         try {
@@ -113,6 +113,7 @@ function PersonTable({ persons = [], setPersons, filters, sortBy }) {
 
     const handlePersonUpdated = () => {
         setIsEditFormOpen(false);
+        setPersonToEdit(null);
         fetchPersons(currentPage, filters, sortBy);
     };
 

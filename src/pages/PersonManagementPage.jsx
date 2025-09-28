@@ -15,17 +15,19 @@ const PersonManagementPage = () => {
     const [personToEdit, setPersonToEdit] = useState(null);
     const [filters, setFilters] = useState({});
     const [sortBy, setSortBy] = useState('');
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+    const refreshTable = () => {
+        setRefreshTrigger(prev => prev + 1);
+    };
 
     const handlePersonAdded = (newPerson) => {
-        setPersons(prev => [...prev, newPerson]);
+        refreshTable();
+        showToast('Person успешно добавлен!', 'success');
     };
 
     const handlePersonUpdated = (updatedPerson) => {
-        setPersons(prev =>
-            prev.map(person =>
-                person.id === updatedPerson.id ? updatedPerson : person
-            )
-        );
+        refreshTable();
         showToast('Person успешно обновлен!', 'success');
     };
 
@@ -52,7 +54,7 @@ const PersonManagementPage = () => {
                     onSortChange={handleSortChange}
                 />
 
-                <SpecialOperations />
+                <SpecialOperations onOperationComplete={refreshTable} />
 
                 <div className="add-button-wrapper">
                     <button
@@ -68,6 +70,7 @@ const PersonManagementPage = () => {
                     setPersons={setPersons}
                     filters={filters}
                     sortBy={sortBy}
+                    refreshTrigger={refreshTrigger}
                     onEditPerson={handleEditPerson}
                 />
             </div>
