@@ -5,7 +5,7 @@ import DemographyModal from './DemographyModal';
 import { showToast } from '../Toast/toastService.js';
 import './SpecialOperations.css';
 
-function SpecialOperations({ onDataChange }) {
+function SpecialOperations({ onOperationComplete }) {
     const [showDemographyModal, setShowDemographyModal] = useState(false);
 
     const handleDeleteByHairColor = async (hairColor) => {
@@ -17,8 +17,8 @@ function SpecialOperations({ onDataChange }) {
 
             if (response.status === 204) {
                 showToast(`Person с цветом волос ${hairColor} успешно удален`, 'success');
-                if (onDataChange) {
-                    onDataChange();
+                if (onOperationComplete) {
+                    onOperationComplete();
                 }
             } else if (response.status === 404) {
                 showToast(`Не найден Person с цветом волос ${hairColor}`, 'warning');
@@ -26,6 +26,7 @@ function SpecialOperations({ onDataChange }) {
                 const error = await response.json();
                 showToast(error.message || 'Ошибка при удалении', 'error');
             }
+
         } catch (error) {
             console.error(error);
             showToast('Ошибка соединения с сервером', 'error');

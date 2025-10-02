@@ -44,17 +44,14 @@ function PersonTable({ persons = [], setPersons, filters, sortBy, refreshTrigger
             }
 
             const url = `${import.meta.env.VITE_PERSON_SERVICE}/persons?${params.toString()}`;
-            console.log('Запрос к URL:', url);
 
             const response = await fetch(url);
-            console.log('Response status:', response.status);
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const data = await response.json();
-            console.log('Полученные данные:', data);
 
             const totalPagesHeader = parseInt(response.headers.get('X-Total-Pages') || '1');
             const currentPageHeader = parseInt(response.headers.get('X-Current-Page') || '0');
@@ -64,13 +61,6 @@ function PersonTable({ persons = [], setPersons, filters, sortBy, refreshTrigger
             setCurrentPage(currentPageHeader);
             setTotalPages(totalPagesHeader);
             setTotalElements(totalElementsHeader);
-
-            console.log('Pagination info:', {
-                totalPages: totalPagesHeader,
-                currentPage: currentPageHeader,
-                totalElements: totalElementsHeader,
-                dataLength: data.length
-            });
         } catch (error) {
             console.error('Ошибка при загрузке данных:', error);
             setPersons([]);

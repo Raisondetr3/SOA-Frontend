@@ -244,8 +244,6 @@ const AddPersonForm = ({ onClose, onSubmit }) => {
             } : null
         };
 
-        console.log('Отправляемые данные Person:', JSON.stringify(personData, null, 2));
-
         try {
             const response = await fetch(`${import.meta.env.VITE_PERSON_SERVICE}/persons`, {
                 method: 'POST',
